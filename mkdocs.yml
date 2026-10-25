@@ -1,0 +1,89 @@
+# MkDocs configuration for Go CLI Tool.
+#
+# The self-contained mkdocs Docker image (registry.gitlab.com/hzahnlei/build-images/mkdocs:1.5.3)
+# injects assets/js/mermaid.min.js and assets/js/mathjax-tex-svg.js into docs_dir at start-up;
+# .gitignore excludes them. plantuml_fence.py is referenced at its absolute path inside the image.
+# gen_docs.py builds the navigation from the groups of docs/.
+#
+# Serve locally  : make docs
+# Build static   : docker run --rm -v "$PWD:/docs" <mkdocs-image> build
+
+site_name: "Go CLI Tool"
+site_description: "Go CLI Tool example."
+docs_dir: docs
+
+hooks:
+  - /usr/local/share/plantuml_fence.py
+
+theme:
+  name: material
+  font: false
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.top
+    - toc.integrate
+    - content.code.copy
+    - content.code.annotate
+
+plugins:
+  - search
+
+  - gen-files:
+      scripts:
+        - gen_docs.py
+
+  - mermaid2:
+      javascript: assets/js/mermaid.min.js
+
+  - swagger-ui-tag:
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  # Nested list items indented by 2 spaces, as editors and formatters write them.
+  - mdx_truly_sane_lists:
+      nested_indent: 2
+  - tables
+  - toc:
+      permalink: true
+
+  - pymdownx.arithmatex:
+      generic: true
+
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
+
+  - pymdownx.snippets:
+      base_path: .
+      check_paths: true
+
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.details
+
+extra_javascript:
+  - assets/js/mathjax-tex-svg.js

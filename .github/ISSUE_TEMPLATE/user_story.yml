@@ -1,0 +1,51 @@
+name: User Story
+description: Describe a user story.
+title: "[User Story] "
+labels:
+  - user-story
+body:
+  - type: markdown
+    attributes:
+      value: |
+        - **As** role/user
+        - **I want to** action/feature
+        - **so that** benefit/value.
+  - type: textarea
+    id: contacts
+    attributes:
+      label: Contacts
+      description: Name persons/organizations who raised the bug, can provide input, or provide support.
+      value: |
+        | Person/Organization | Contribution |
+        | -------------------- | ------------- |
+        |                      |               |
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Describe the context in which the user story is embedded.
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Requirements
+      description: >-
+        Describe the functional, technical, and non-functional requirements, or link the
+        Capability Specification that states them.
+        None otherwise.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Describe when the solution is considered done. Mandatory. Part of the Definition of Ready.
+      value: |
+        1.
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: references-and-attachments
+    attributes:
+      label: References and Attachments
+      description: Add links to related documents and tickets. Attach screen shots, diagrams and sketches.

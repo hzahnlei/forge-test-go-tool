@@ -1,0 +1,106 @@
+# macOS
+.DS_Store
+.DS_STORE
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Dependencies
+# vendor/ is deliberately not ignored here: for firmware-stm32 projects it holds CubeMX's
+# generated project (including the .ioc file — the actual hardware configuration source of
+# truth), which must be committed, not treated as disposable/regenerable like node_modules/.
+node_modules/
+.venv/
+__pycache__/
+
+# Build output
+dist/
+build/
+out/
+target/
+# STM32CubeMX names a real, committed source directory "Target" (e.g. USB_Device/Target/) —
+# unignore it so it isn't swallowed by the target/ rule above under a case-insensitive git
+# config (core.ignorecase, the macOS/Windows default), which folds "Target" onto "target".
+!vendor/**/Target/
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+*.class
+*.jar
+internal/gen/ # Generated code, e.g. openAPI
+
+# MkDocs — docs/ is the authored documentation source; site/ is the rendered static site,
+# fully regenerable via `mkdocs build`, so it must never be committed. The mkdocs image writes
+# the JavaScript it injects to docs/assets/js/.
+site/
+/docs/assets/js/
+
+# CMake / Conan (C++) — CMakeUserPresets.json is the local-machine companion to the
+# committed CMakePresets.json; it points at a build/ output folder that is itself ignored,
+# so it must never be committed (matches CMake's own convention for this file).
+CMakeUserPresets.json
+
+# KiCad — *.kicad_prl is per-machine project-local settings (open sheets, view state), never
+# shared; *.lck is KiCad's own lock file while a project is open; .history/ is a local
+# autosave repo (its own nested .git) created by a KiCad git-history plugin, not a submodule;
+# *-backups/ is KiCad's own built-in periodic ZIP backup-archive folder (Preferences → Common →
+# Backup Archives), also local-machine churn, not meant to be shared; *_drc_violations.json is
+# written next to the board file by this project's KiCad MCP server every time its DRC tool
+# runs (kicad-cli pcb drc output) — always regenerable, never meant to be committed. (No ERC
+# counterpart: the MCP server's ERC tool uses a temp file it deletes itself.)
+*.kicad_prl
+*.lck
+.history/
+*-backups/
+*_drc_violations.json
+
+# Test & coverage
+test_reports/
+coverage/
+.nyc_output/
+.pytest_cache/
+*.pyc
+playwright-report/
+test-results/
+.features-gen/
+
+# Caches of the CI jobs
+.go-cache/
+.m2/
+.conan/
+.conan-musl/
+.npm-cache/
+
+# Logs & temp
+*.log
+*.tmp
+*.bak
+*.cache
+
+# Secrets & local config
+.env
+.env.*
+*.key
+*.pem
+secrets.json
+
+# Claude — shared config is committed; only local overrides are ignored
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Devbox
+.devbox/

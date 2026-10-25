@@ -1,0 +1,19 @@
+// Files markdownlint-cli2 checks; the rules are in .markdownlint.json.
+{
+  "globs": ["**/*.md"],
+  "ignores": [
+    "build/**",
+    "target/**",
+    "test_reports/**",
+    "test-results/**",
+    "playwright-report/**",
+    "node_modules/**",
+    ".devbox/**",
+    ".go-cache/**",
+    ".npm-cache/**",
+    ".m2/**",
+    ".conan/**",
+    "vendor/cubemx/Drivers/**",
+    "vendor/cubemx/Middlewares/**"
+  ]
+}

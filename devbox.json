@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.7/.schema/devbox.schema.json",
+  "packages": [
+    "go@1.26.5",
+    "golangci-lint@2.12.2",
+    "delve@1.27.0",
+    "go-junit-report@2.1.0",
+    "gocover-cobertura@1.5.0",
+    "go-arch-lint@1.16.0",
+    "gnumake@4.4.1",
+    "shellcheck@0.11.0",
+    "docker@29.6.2",
+    "gh@2.102.0",
+    "actionlint@1.7.12",
+    "python@3.14.4",
+    "plantuml@1.2026.3"
+  ],
+  "shell": {
+    "init_hook": [],
+    "scripts": {}
+  }
+}

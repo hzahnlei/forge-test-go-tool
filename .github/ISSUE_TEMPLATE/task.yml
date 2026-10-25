@@ -1,0 +1,37 @@
+name: Task
+description: Standard template for a task.
+title: "[Task] "
+labels:
+  - task
+body:
+  - type: textarea
+    id: contacts
+    attributes:
+      label: Contacts
+      description: Name persons/organizations who created the task, can provide input, or provide support.
+      value: |
+        | Person/Organization | Contribution |
+        | -------------------- | ------------- |
+        |                      |               |
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Describe the context in which the task is embedded.
+    validations:
+      required: true
+  - type: textarea
+    id: to-be-done
+    attributes:
+      label: To be Done
+      description: Describe what is to be done.
+      value: |
+        1.
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: references-and-attachments
+    attributes:
+      label: References and Attachments
+      description: Add links to related documents and tickets. Attach screen shots, diagrams and sketches.

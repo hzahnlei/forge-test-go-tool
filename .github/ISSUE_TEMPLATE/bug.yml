@@ -1,0 +1,54 @@
+name: Bug Description
+description: Report a bug.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: contacts
+    attributes:
+      label: Contacts
+      description: Name persons/organizations who raised the bug, can provide input, or provide support.
+      value: |
+        | Person/Organization | Contribution |
+        | -------------------- | ------------- |
+        |                      |               |
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: Describe how the system should behave.
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: Describe the actual, erroneous behavior you observed.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Describe the impact of this bug on your work or project.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Describe in which environment the bug was observed.
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Describe the steps to reproduce the bug.
+      value: |
+        1.
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: references-and-attachments
+    attributes:
+      label: References and Attachments
+      description: Add links to related documents and tickets. Attach screen shots and log files.

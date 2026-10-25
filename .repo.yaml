@@ -1,0 +1,18 @@
+name: Go CLI Tool
+description: Go CLI Tool example.
+repository: gitlab.com/hzahnlei/go-tool
+repoType: single
+ci: github
+assistants: []
+artifacts:
+  - name: go-tool
+    title: Go CLI Tool
+    description: Go CLI Tool example.
+    language: go
+    type: tool
+    modules: [scaffold, ci, specs, bdd, ai, can]
+meta:
+  # Written by `repo update`; do not edit.
+  generatorVersion: v2.0.0-39-ga92abda
+  artifacts:
+    go-tool: [scaffold, ci, specs, bdd, ai, can]

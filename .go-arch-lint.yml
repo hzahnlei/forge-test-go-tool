@@ -1,0 +1,68 @@
+# Enforces Clean Architecture layer dependencies: app → infra → usecase → domain.
+# Run: make arch-test
+version: 3
+workdir: .
+
+allow:
+  depOnAnyVendor: false
+  # The AST-based call/DI analysis flags ordinary constructor injection (cmd wiring an
+  # infra implementation into a usecase constructor that takes an interface) as a false
+  # layer violation. The import-based `deps:` graph below already enforces the real
+  # boundary, so the extra call-graph heuristic is switched off rather than worked around.
+  deepScan: false
+
+exclude:
+  - .go-cache
+  # Godog acceptance-test harness — test-infra glue, not part of the layered
+  # architecture this file enforces.
+  - test
+
+components:
+  cmd:
+    in: cmd/**
+  domain:
+    in: internal/domain/**
+  usecase:
+    in: internal/usecase/**
+  infra:
+    in: internal/infra/**
+  app:
+    in: internal/app/**
+
+deps:
+  # Every component lists itself: Go's black-box test convention (package foo_test in the
+  # same directory as package foo, importing foo) is a same-component reference as far as
+  # the file tree is concerned, but go-arch-lint checks it like any other import — without
+  # this, a plain `package app_test` importing `.../internal/app` trips a false violation.
+  # cmd additionally needs this for Cobra's own convention: cmd/root.go (package cmd, the
+  # command tree) is imported by cmd/<tool>/main.go (package main) — both within cmd.
+  cmd:
+    anyVendorDeps: true
+    mayDependOn:
+      - cmd
+      - app
+      - infra
+      - usecase
+      - domain
+  app:
+    anyVendorDeps: true
+    mayDependOn:
+      - app
+      - infra
+      - usecase
+      - domain
+  infra:
+    anyVendorDeps: true
+    mayDependOn:
+      - infra
+      - usecase
+      - domain
+  usecase:
+    anyVendorDeps: true
+    mayDependOn:
+      - usecase
+      - domain
+  domain:
+    anyVendorDeps: true
+    mayDependOn:
+      - domain

@@ -1,0 +1,95 @@
+name: Capability Specification
+description: Specify one capability of the system.
+title: "[Capability] "
+labels:
+  - capability
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Status: Draft. Every section is present, in this order; a section without content says `None.`
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: "Why the capability exists; builds on the mission statement."
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: "Interfaces and documents the capability relies on."
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: "Content that fits the capability better than prose, e.g. tables that relate input to output."
+    validations:
+      required: true
+  - type: textarea
+    id: functional-requirements
+    attributes:
+      label: Functional Requirements
+      description: "Numbered."
+      value: |
+        1. 
+    validations:
+      required: true
+  - type: textarea
+    id: non-functional-requirements
+    attributes:
+      label: Non-Functional Requirements
+      description: "Numbered, each measurable."
+      value: |
+        1. 
+    validations:
+      required: true
+  - type: textarea
+    id: technical-requirements
+    attributes:
+      label: Technical Requirements
+      description: "Numbered; constraints on the solution space, e.g. target hardware or interrupt context."
+      value: |
+        1. 
+    validations:
+      required: true
+  - type: textarea
+    id: error-handling
+    attributes:
+      label: Error Handling
+      description: "Numbered."
+      value: |
+        1. 
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of Scope
+      description: "What the capability deliberately does not do."
+      value: |
+        - 
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: "Numbered; with test vectors where values matter; each verified automatically unless it refers to a manual test."
+      value: |
+        1. 
+    validations:
+      required: true
+  - type: textarea
+    id: decisions
+    attributes:
+      label: Decisions
+      description: "Numbered; each decision with its reason and its consequence."
+      value: |
+        1. **The decision.** Its reason.
+          Consequence: what follows from it.
+    validations:
+      required: true
