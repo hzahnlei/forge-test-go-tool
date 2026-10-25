@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: davidanson/markdownlint-cli2:v0.23.3
+      options: --user root
     if: "!startsWith(github.ref, 'refs/tags/')"
     steps:
       - uses: actions/checkout@v4
