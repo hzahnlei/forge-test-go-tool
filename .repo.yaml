@@ -13,6 +13,6 @@ artifacts:
     modules: [scaffold, ci, specs, bdd, ai, can]
 meta:
   # Written by `repo update`; do not edit.
-  generatorVersion: v2.0.0-39-ga92abda-dirty
+  generatorVersion: v2.0.0-40-gc9edd4b
   artifacts:
     go-tool: [scaffold, ci, specs, bdd, ai, can]

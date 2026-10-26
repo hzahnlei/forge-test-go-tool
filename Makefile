@@ -183,9 +183,16 @@ scan: phony
 
 IMAGE_REGISTRY ?= ghcr.io/hzahnlei
 IMAGE_NAME     := $(IMAGE_REGISTRY)/$(ARTIFACT)
-# The build images exist for amd64 only; without it, an arm64 host mixes an amd64 builder with an
-# arm64 runtime stage.
+# The build images exist for amd64 only, and so do the images.
 IMAGE_PLATFORM := linux/amd64
+
+# The images take what the builds produced, as in the pipeline, and compile nothing themselves.
+# Locally, the builds run in the pipeline's build images first, into a directory of their own, so
+# that they never replace the host's executables.
+IMAGE_BUILD_DIR := $(BUILD_DIR)/image
+IMAGE_BUILD_RUN := docker run --rm --platform $(IMAGE_PLATFORM) -v "$(CURDIR):/src" -w /src \
+    -u "$$(id -u):$$(id -g)" -e HOME=/tmp \
+    -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0='*'
 
 # Defensive: `image` collides with the real image/ directory (holds the Dockerfile, present from
 # generation time, not just after a build) — no target here currently depends on `image`, but if
@@ -197,21 +204,23 @@ IMAGE_PLATFORM := linux/amd64
 # Debug container image (bash and investigation tools, see the containerization guideline).
 # Image name is suffixed with -debug to distinguish from the release image.
 image: phony
+	$(IMAGE_BUILD_RUN) -e GOCACHE=/src/.go-cache/build -e GOMODCACHE=/src/.go-cache/mod registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3 \
+	    make build BUILD_DIR=$(IMAGE_BUILD_DIR) VERSION=$(VERSION) COMMIT=$(COMMIT)
 	docker build \
 	    --platform $(IMAGE_PLATFORM) \
-	    --build-arg VERSION=$(VERSION) \
-	    --build-arg COMMIT=$(COMMIT) \
+	    --build-arg DEBUG_EXECUTABLE=$(IMAGE_BUILD_DIR)/$(ARTIFACT)-debug \
 	    --target debug \
 	    -t $(IMAGE_NAME):$(VERSION)-debug \
 	    -f image/Dockerfile .
 
-# Release container image (distroless/cc:nonroot — minimal attack surface).
+# Release container image (distroless, nonroot — minimal attack surface).
 # Tagged with both the version and latest.
 release-image: phony
+	$(IMAGE_BUILD_RUN) -e GOCACHE=/src/.go-cache/build -e GOMODCACHE=/src/.go-cache/mod registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3 \
+	    make release-build BUILD_DIR=$(IMAGE_BUILD_DIR) VERSION=$(VERSION) COMMIT=$(COMMIT)
 	docker build \
 	    --platform $(IMAGE_PLATFORM) \
-	    --build-arg VERSION=$(VERSION) \
-	    --build-arg COMMIT=$(COMMIT) \
+	    --build-arg RELEASE_EXECUTABLE=$(IMAGE_BUILD_DIR)/$(ARTIFACT) \
 	    --target release \
 	    -t $(IMAGE_NAME):$(VERSION) \
 	    -t $(IMAGE_NAME):latest \

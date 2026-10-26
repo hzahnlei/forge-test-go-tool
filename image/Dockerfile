@@ -1,38 +1,17 @@
-# Multi-stage build: builder compiles a static Go binary; runtime is a minimal distroless image.
+# The images take the executables the pipeline built and tested; they compile nothing. The
+# release stage takes the stripped executable of release-build, the debug stage the executable of
+# build, with debug symbols and no optimization. Both are static (CGO disabled). Locally,
+# `make release-image` and `make image` build both in the pipeline's build image first.
 
-# ── Stage 1: Build ─────────────────────────────────────────────────────────────
-FROM registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3 AS builder
-
-ARG VERSION=dev
-ARG COMMIT=unknown
-
-WORKDIR /src
-
-COPY go.mod go.sum ./
-RUN go mod download
-
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build \
-        -ldflags="-s -w -X main.version=${VERSION} -X main.commit=${COMMIT}" \
-        -o /install/go-tool \
-        ./cmd/go-tool/...
-
-# Debug-capable variant: same flags minus -s -w, so the symbol table and DWARF debug info
-# are retained for dlv/pprof. Same optimization level and behavior as the release build —
-# not the sanitizer-enabled Debug build configuration.
-RUN CGO_ENABLED=0 GOOS=linux go build \
-        -ldflags="-X main.version=${VERSION} -X main.commit=${COMMIT}" \
-        -o /install/debug/go-tool \
-        ./cmd/go-tool/...
-
-# ── Stage 2: Production runtime (distroless, no shell) ─────────────────────────
+# ── Release runtime (distroless, no shell) ───────────────────────────────────
 FROM gcr.io/distroless/static-debian13:nonroot AS release
 
-COPY --from=builder /install/go-tool /app/go-tool
+ARG RELEASE_EXECUTABLE=build/go-tool
+COPY --chmod=755 ${RELEASE_EXECUTABLE} /app/go-tool
 
 ENTRYPOINT ["/app/go-tool"]
 
-# ── Stage 3: Debug runtime (debug-symbol binary + investigation tooling) ───────
+# ── Debug runtime (bash and investigation tools) ─────────────────────────────
 # Not distroless: the investigation tools need a package manager.
 FROM debian:13.5-slim AS debug
 
@@ -43,7 +22,8 @@ RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends ca-certificates curl jq procps ripgrep vim-tiny && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /install/debug/go-tool /app/go-tool
+ARG DEBUG_EXECUTABLE=build/go-tool-debug
+COPY --chmod=755 ${DEBUG_EXECUTABLE} /app/go-tool
 COPY image/entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]

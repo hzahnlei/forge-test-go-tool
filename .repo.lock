@@ -20,7 +20,7 @@ ad9b1133ff53  docs/design/system_context.md
 375f78fcd260  docs/requirements/glossary.md
 faeb8951cfea  docs/verification/acceptance/CAP-001_greeting.feature
 f15ff4f3f641  go.mod
-fcb795de54d4  image/Dockerfile
+29d022693e1c  image/Dockerfile
 27a46d19c1b3  image/entrypoint.sh
 517442c4a076  internal/app/doc.go
 d52812680967  internal/domain/greeting.go
