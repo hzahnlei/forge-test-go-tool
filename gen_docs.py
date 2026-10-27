@@ -148,10 +148,10 @@ def add_tree(docs: Path, prefix: str, native: bool) -> set[str]:
 
 
 def nav_of(directory: str, pages: set[str]) -> list:
-    """Returns the navigation of the pages below directory: index.md or README.md first, the
-    section's start page, then files, then each subdirectory as a section."""
+    """Returns the navigation of the pages below directory: index.md first, the section's start
+    page, then files, then each subdirectory as a section."""
     files = sorted(p for p in pages if posixpath.dirname(p) == directory)
-    files.sort(key=lambda p: posixpath.basename(p) not in ("index.md", "README.md"))
+    files.sort(key=lambda p: posixpath.basename(p) != "index.md")
     subdirectories = sorted({p[len(directory) + 1:].split("/", 1)[0] for p in pages
                              if p.startswith(directory + "/") and posixpath.dirname(p) != directory})
     return files + [{title(d): nav_of(f"{directory}/{d}", pages)} for d in subdirectories]

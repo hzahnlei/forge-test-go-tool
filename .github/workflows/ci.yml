@@ -55,7 +55,7 @@ jobs:
     name: Arch test
     runs-on: ubuntu-latest
     container:
-      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3
+      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0
     env:
       GOMODCACHE: /tmp/go-mod
       GOFLAGS: -mod=readonly
@@ -79,7 +79,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     container:
-      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3
+      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0
     env:
       GOMODCACHE: /tmp/go-mod
       GOFLAGS: -mod=readonly
@@ -129,7 +129,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     container:
-      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3
+      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0
     env:
       GOMODCACHE: /tmp/go-mod
       GOFLAGS: -mod=readonly
@@ -153,7 +153,7 @@ jobs:
     name: BDD Test
     runs-on: ubuntu-latest
     container:
-      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3
+      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0
     env:
       GOMODCACHE: /tmp/go-mod
       GOFLAGS: -mod=readonly
@@ -177,7 +177,7 @@ jobs:
     name: Coverage
     runs-on: ubuntu-latest
     container:
-      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3
+      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0
     env:
       GOMODCACHE: /tmp/go-mod
       GOFLAGS: -mod=readonly
@@ -201,7 +201,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3
+      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0
     env:
       GOMODCACHE: /tmp/go-mod
       GOFLAGS: -mod=readonly
@@ -225,7 +225,7 @@ jobs:
     name: Release build
     runs-on: ubuntu-latest
     container:
-      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3
+      image: registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0
     env:
       GOMODCACHE: /tmp/go-mod
       GOFLAGS: -mod=readonly

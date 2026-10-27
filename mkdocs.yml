@@ -6,11 +6,13 @@
 # gen_docs.py builds the navigation from the groups of docs/.
 #
 # Serve locally  : make docs
-# Build static   : docker run --rm -v "$PWD:/docs" <mkdocs-image> build
+# Build static   : docker run --rm -v "$PWD:/docs" <mkdocs-image> build --strict
 
 site_name: "Go CLI Tool"
 site_description: "Go CLI Tool example."
 docs_dir: docs
+# A README.md tells the developer how to work in its directory; it is no page of the site.
+exclude_docs: README.md
 
 hooks:
   - /usr/local/share/plantuml_fence.py

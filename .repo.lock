@@ -14,7 +14,7 @@ f79b524f3e15  cliff.toml
 4747b03eddfc  cmd/go-tool/main.go
 714c6e056a64  cmd/root.go
 9769b06a2151  devbox.json
-ad9b1133ff53  docs/design/system_context.md
+6d1f1e90cc7d  docs/design/system_context.md
 64ea4508b9fe  docs/index.md
 41518e6b4ab4  docs/requirements/capabilities/CAP-001_greeting.md
 375f78fcd260  docs/requirements/glossary.md

@@ -204,7 +204,7 @@ IMAGE_BUILD_RUN := docker run --rm --platform $(IMAGE_PLATFORM) -v "$(CURDIR):/s
 # Debug container image (bash and investigation tools, see the containerization guideline).
 # Image name is suffixed with -debug to distinguish from the release image.
 image: phony
-	$(IMAGE_BUILD_RUN) -e GOCACHE=/src/.go-cache/build -e GOMODCACHE=/src/.go-cache/mod registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3 \
+	$(IMAGE_BUILD_RUN) -e GOCACHE=/src/.go-cache/build -e GOMODCACHE=/src/.go-cache/mod registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0 \
 	    make build BUILD_DIR=$(IMAGE_BUILD_DIR) VERSION=$(VERSION) COMMIT=$(COMMIT)
 	docker build \
 	    --platform $(IMAGE_PLATFORM) \
@@ -216,7 +216,7 @@ image: phony
 # Release container image (distroless, nonroot — minimal attack surface).
 # Tagged with both the version and latest.
 release-image: phony
-	$(IMAGE_BUILD_RUN) -e GOCACHE=/src/.go-cache/build -e GOMODCACHE=/src/.go-cache/mod registry.gitlab.com/hzahnlei/build-images/go-build:1.4.3 \
+	$(IMAGE_BUILD_RUN) -e GOCACHE=/src/.go-cache/build -e GOMODCACHE=/src/.go-cache/mod registry.gitlab.com/hzahnlei/build-images/go-build:1.5.0 \
 	    make release-build BUILD_DIR=$(IMAGE_BUILD_DIR) VERSION=$(VERSION) COMMIT=$(COMMIT)
 	docker build \
 	    --platform $(IMAGE_PLATFORM) \
@@ -267,7 +267,7 @@ MKDOCS := docker run --rm -v "$(CURDIR):/docs" $(MKDOCS_IMAGE)
 endif
 
 docs-build: phony
-	$(MKDOCS) build --site-dir $(SITE_DIR)
+	$(MKDOCS) build --strict --site-dir $(SITE_DIR)
 
 # Delete all generated build artifacts and test reports.
 clean: phony
